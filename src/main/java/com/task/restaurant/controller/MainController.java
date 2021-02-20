@@ -8,22 +8,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.task.restaurant.service.DishService;
-import com.task.restaurant.to.DishTo;
+import com.task.restaurant.service.MainService;
+import com.task.restaurant.model.Dish;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/restaurant")
 public class MainController {
+	private static final Logger log = LoggerFactory.getLogger(MainController.class);
+
 	@Autowired
-	private DishService service;
+	private MainService service;
 	
 	@GetMapping
-	public List<DishTo> getAll() {
+	public List<Dish> getAll() {
+		log.info("Runnig getAll()...");
 		return service.getAll();
 	}
 	
 	@GetMapping("{ids}")
-	public List<DishTo> getListWithTimeAndCost(@PathVariable List<Long> ids) {
-		return service.getListWithTimeAndCost(ids);
+	public Long addOrder(@PathVariable List<Long> ids) {
+		log.info("Running addOrder()...");
+		return service.addOrder(ids);
 	}
 }
